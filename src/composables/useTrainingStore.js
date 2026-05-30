@@ -229,9 +229,7 @@ const scoreTechnique = (technique, history) => {
   const chanceScore = technique.repetitionChance / 100
   const orderScore = 0.5
 
-  // Fórmula de recomendação:
-  // score = 0.45 * ordem_norm + 0.35 * chance + 0.20 * recência_norm
-  return 0.45 * orderScore + 0.35 * chanceScore + 0.2 * recencyScore
+  return calculateScore(orderScore, chanceScore, recencyScore)
 }
 
 const scoreKati = (katiId, history) => {
@@ -242,8 +240,13 @@ const scoreKati = (katiId, history) => {
   const categoryMaxOrder = kati ? maxOrderByCategory[kati.category || 'Outros'] : 0
   const orderScore = kati && categoryMaxOrder > 1 ? (kati.order - 1) / (categoryMaxOrder - 1) : 0.5
 
-  return 0.45 * orderScore + 0.35 * chanceScore + 0.2 * recencyScore
+  return calculateScore(orderScore, chanceScore, recencyScore)
 }
+
+const calculateScore = (orderScore, chanceScore, recencyScore) => {
+  // Fórmula de recomendação:
+  return 0.3 * orderScore + 0.3 * chanceScore + 0.4 * recencyScore;
+};
 
 const sortedRecommendations = (items, type, limit = 6) => {
   const history = new Map([
