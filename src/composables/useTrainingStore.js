@@ -121,7 +121,12 @@ const userKnownKatis = ref(loadStoredArray(STORAGE_KEYS.userKnownKatis, []))
 const trainingHistory = ref(loadStoredArray(STORAGE_KEYS.history, []))
 const katiRepetitionChances = ref(loadStoredArray(STORAGE_KEYS.katiRepetitionChances, {}))
 
-const formDatetime = ref(new Date().toISOString().slice(0, 16))
+const getLocalDateTimeValue = (date = new Date()) => {
+  const offsetMs = date.getTimezoneOffset() * 60_000
+  return new Date(date.getTime() - offsetMs).toISOString().slice(0, 16)
+}
+
+const formDatetime = ref(getLocalDateTimeValue())
 const selectedTechniques = ref([])
 const selectedKatis = ref([]) // will store kati ids
 
@@ -149,7 +154,7 @@ const registerTraining = () => {
 
   selectedTechniques.value = []
   selectedKatis.value = []
-  formDatetime.value = new Date().toISOString().slice(0, 16)
+  formDatetime.value = getLocalDateTimeValue()
 }
 
 
