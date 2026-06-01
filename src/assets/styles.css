@@ -41,12 +41,10 @@ button, input, textarea, select {
   display: grid;
   gap: 2rem;
   align-items: center;
-  grid-template-columns: 1.25fr 0.9fr;
   padding: 3rem 1.2rem;
 }
 
 .hero-copy {
-  max-width: 650px;
 }
 
 .tag {

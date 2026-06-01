@@ -3,7 +3,7 @@
     <header class="hero">
       <div class="hero-copy">
         <span class="tag">Shaolin Coach</span>
-        <h1>Treine kung fu com foco em disciplina, força e mobilidade.</h1>
+        <h1>Assistente de treinos de Kung Fu Shaolin do Norte.</h1>
         <p>
           Uma aplicação para organizar sua rotina de treino, técnicas e progressão diária.
         </p>
@@ -13,6 +13,7 @@
     <main>
       <div class="page-nav">
         <RouterLink to="/">Registrar treino</RouterLink>
+        <RouterLink to="/dashboard">Dashboard</RouterLink>
         <RouterLink to="/recommend">Recomendar</RouterLink>
         <RouterLink to="/config">Configuração</RouterLink>
       </div>
