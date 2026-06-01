@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import RegisterPage from '../pages/RegisterPage.vue'
 import RecommendPage from '../pages/RecommendPage.vue'
 import DashboardPage from '../pages/DashboardPage.vue'
@@ -34,7 +34,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
 })
 

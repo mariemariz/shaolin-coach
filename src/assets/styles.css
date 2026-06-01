@@ -717,3 +717,17 @@ textarea:focus {
 .number-input[type=number] {
   -moz-appearance: textfield;
 }
+
+@media (max-width: 720px) {
+  .recommendation-form .form-row-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendation-form .form-control {
+    width: 100%;
+  }
+
+  .recommendation-form .number-input {
+    width: 100%;
+  }
+}

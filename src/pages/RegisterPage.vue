@@ -79,6 +79,15 @@ const learnedKatisByCategory = computed(() => {
     }
     grouped[kati.category].push(kati)
   })
-  return Object.entries(grouped).sort((a, b) => a[0].localeCompare(b[0]))
+
+  const order = ['Mãos', 'Armas', 'Outros']
+  return Object.entries(grouped)
+    .sort((a, b) => {
+      const indexA = order.indexOf(a[0])
+      const indexB = order.indexOf(b[0])
+      if (indexA !== indexB) return indexA - indexB
+      return a[0].localeCompare(b[0])
+    })
+    .map(([category, katis]) => [category, katis.sort((a, b) => (a.order || 0) - (b.order || 0))])
 })
 </script>
