@@ -25,17 +25,17 @@ const defaultTechniques = [
 // Master list of katis grouped by category/style. IDs are stable keys saved in user selections and history.
 const masterKatis = [
   // Mãos Shaolin do Norte
-  { id: 'hands-1', category: 'Mãos', order: 1, name: 'Lianbu Quan' },
-  { id: 'hands-2', category: 'Mãos', order: 2, name: 'Duanda' },
-  { id: 'hands-3', category: 'Mãos', order: 3, name: 'Meihua' },
-  { id: 'hands-4', category: 'Mãos', order: 4, name: 'Chuanxin' },
-  { id: 'hands-5', category: 'Mãos', order: 5, name: 'Wuyi' },
-  { id: 'hands-6', category: 'Mãos', order: 6, name: 'Babu' },
-  { id: 'hands-7', category: 'Mãos', order: 7, name: 'Zuoma' },
-  { id: 'hands-8', category: 'Mãos', order: 8, name: 'Linglu' },
-  { id: 'hands-9', category: 'Mãos', order: 9, name: 'Kaimen' },
-  { id: 'hands-10', category: 'Mãos', order: 10, name: 'Lianhuan' },
-  { id: 'hands-11', category: 'Mãos', order: 11, name: 'Fashi' },
+  { id: 'hands-1', category: 'Mãos', order: 1, name: '1º kati - Lianbu Quan' },
+  { id: 'hands-2', category: 'Mãos', order: 2, name: '2º kati - Duanda' },
+  { id: 'hands-3', category: 'Mãos', order: 3, name: '3º kati - Meihua' },
+  { id: 'hands-4', category: 'Mãos', order: 4, name: '4º kati - Chuanxin' },
+  { id: 'hands-5', category: 'Mãos', order: 5, name: '5º kati - Wuyi' },
+  { id: 'hands-6', category: 'Mãos', order: 6, name: '6º kati - Babu' },
+  { id: 'hands-7', category: 'Mãos', order: 7, name: '7º kati - Zuoma' },
+  { id: 'hands-8', category: 'Mãos', order: 8, name: '8º kati - Linglu' },
+  { id: 'hands-9', category: 'Mãos', order: 9, name: '9º kati - Kaimen' },
+  { id: 'hands-10', category: 'Mãos', order: 10, name: '10º kati - Lianhuan' },
+  { id: 'hands-11', category: 'Mãos', order: 11, name: '11º kati - Fashi' },
   { id: 'hands-12', category: 'Mãos', order: 12, name: '18 Movimentos' },
   { id: 'hands-13', category: 'Mãos', order: 13, name: 'Serpente' },
   { id: 'hands-14', category: 'Mãos', order: 14, name: 'Palma de Buda' },
@@ -61,6 +61,11 @@ const masterKatis = [
   { id: 'weap-16', category: 'Armas', order: 16, name: 'Guan Dao' },
   { id: 'weap-17', category: 'Armas', order: 17, name: 'Combinado bastão 2' },
   { id: 'weap-18', category: 'Armas', order: 18, name: 'Homeici' },
+
+
+  // Outros estilos - Tantui
+  { id: 'tantui-1', category: 'Outros', style: 'Tantui', order: 1, name: 'Tantui de 12' },
+  { id: 'tantui-2', category: 'Outros', style: 'Tantui', order: 2, name: 'Tantui de 10' },
 
   // Outros estilos - Louva-a-Deus
   { id: 'louva-1', category: 'Outros', style: 'Louva-a-Deus', order: 1, name: '1º Louva-a-Deus' },

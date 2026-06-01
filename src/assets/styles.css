@@ -383,26 +383,91 @@ textarea:focus {
   min-width: 0;
 }
 
-.hint {
-  margin-top: 1rem;
-}
-
-@media (max-width: 1024px) {
-  .panel-grid,
-  .recommend-grid,
-  .summary-cards {
-    grid-template-columns: 1fr;
+  .form-row-inline {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
-}
 
-.section-header span {
-  display: inline-block;
-  color: #ffb97b;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
+  .form-row-inline .form-control {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .checkbox-item {
+    width: 100%;
+  }
+
+  .panel-grid > *,
+  .dashboard-grid > *,
+  .dashboard-summary-grid > *,
+  .recommend-grid > *,
+  .card-grid > *,
+  .history-panel,
+  .form-panel,
+  .dashboard-card {
+    min-width: 0;
+  }
+
+  .dashboard-table {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .dashboard-card-header {
+    flex-wrap: wrap;
+  }
+
+  .dashboard-card-title-group {
+    align-items: flex-start;
+  }
+
+  @media (max-width: 960px) {
+    .dashboard-summary-grid,
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dashboard-card-header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .dashboard-card-title-group {
+      align-items: stretch;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .panel-grid,
+    .recommend-grid,
+    .summary-cards,
+    .dashboard-summary-grid,
+    .dashboard-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-row-inline,
+    .dashboard-card-title-group {
+      flex-direction: column;
+    }
+
+    .btn,
+    .btn-sm {
+      width: 100%;
+    }
+
+    .checkbox-item {
+      width: 100%;
+    }
+  }
+
 
 .section-header h2 {
   margin: 0;
@@ -479,11 +544,13 @@ textarea:focus {
   align-items: center;
   gap: 0.8rem;
   flex: 1;
+  flex-wrap: wrap;
 }
 
 .chance-slider {
   flex: 1;
   min-width: 150px;
+  min-height: 6px;
   height: 6px;
   border-radius: 3px;
   background: rgba(255, 255, 255, 0.1);
@@ -542,6 +609,43 @@ textarea:focus {
 
 .kati-group {
   margin-top: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .technique-item,
+  .kati-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .technique-name {
+    min-width: 0;
+  }
+
+  .chance-input-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+    width: 100%;
+    padding-top: 0.35rem;
+  }
+
+  .chance-slider {
+    min-width: 0;
+    width: 100%;
+    height: 6px;
+  }
+
+  .chance-value {
+    text-align: left;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .kati-item .chance-input-group {
+    flex: 1;
+    width: 100%;
+  }
 }
 
 .kati-group:first-of-type {

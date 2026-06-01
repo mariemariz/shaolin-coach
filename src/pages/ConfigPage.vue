@@ -35,7 +35,7 @@
             <div v-for="k in items" :key="k.id" class="kati-item">
               <label class="checkbox-item">
                 <input type="checkbox" :value="k.id" :checked="userKnownKatis.includes(k.id)" @change="toggleKnownKati(k.id)" />
-                <span>{{ k.order ? (k.order + ' - ') : '' }}{{ k.name }}<small v-if="k.style"> — {{ k.style }}</small></span>
+                <span>{{ k.name }}<small v-if="k.style"> — {{ k.style }}</small></span>
               </label>
               <div v-if="userKnownKatis.includes(k.id)" class="chance-input-group">
                 <input 

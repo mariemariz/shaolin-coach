@@ -22,7 +22,7 @@
     </main>
 
     <footer class="footer">
-      <p>Desenvolvido para auxiliar o treino de kung fu Shaolin Norte.</p>
+      <p>Desenvolvido por <a href="https://github.com/mariemariz" target="_blank">@mariemariz</a>, 2026.</p>
     </footer>
   </div>
 </template>
