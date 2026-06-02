@@ -37,12 +37,13 @@
                 <input type="checkbox" :value="k.id" :checked="userKnownKatis.includes(k.id)" @change="toggleKnownKati(k.id)" />
                 <span>{{ k.name }}<small v-if="k.style"> — {{ k.style }}</small></span>
               </label>
-              <div v-if="userKnownKatis.includes(k.id)" class="chance-input-group">
+              <div class="chance-input-group">
                 <input 
                   type="range" 
                   min="0" 
                   max="100" 
                   :value="getKatiRepetitionChance(k.id)"
+                  :disabled="!userKnownKatis.includes(k.id)"
                   @input="updateKatiRepetitionChance(k.id, parseInt($event.target.value))"
                   class="chance-slider"
                 />
@@ -89,3 +90,18 @@ const groupedKatis = computed(() => {
   return groups
 })
 </script>
+
+<style scoped>
+.chance-slider:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chance-slider:disabled::-webkit-slider-thumb {
+  background-color: #999;
+}
+
+.chance-slider:disabled::-moz-range-thumb {
+  background-color: #999;
+}
+</style>

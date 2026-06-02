@@ -41,6 +41,7 @@ const masterKatis = [
   { id: 'hands-14', category: 'Mãos', order: 14, name: 'Palma de Buda' },
   { id: 'hands-15', category: 'Mãos', order: 15, name: 'Macaco' },
   { id: 'hands-16', category: 'Mãos', order: 16, name: 'Bêbado' },
+  { id: 'hands-17', category: 'Mãos', order: 17, name: 'Combinado de mãos' },
 
   // Armas
   { id: 'weap-1', category: 'Armas', order: 1, name: 'Bastão' },
@@ -237,25 +238,21 @@ const scoreTechnique = (technique, history) => {
   const lastDate = getLastTrainedDate(technique.name, 'techniques', history)
   const recencyScore = normalizeRecencyScore(lastDate)
   const chanceScore = technique.repetitionChance / 100
-  const orderScore = 0.5
 
-  return calculateScore(orderScore, chanceScore, recencyScore)
+  return calculateScore(chanceScore, recencyScore)
 }
 
 const scoreKati = (katiId, history) => {
-  const kati = masterKatis.find((m) => m.id === katiId)
   const lastDate = getLastTrainedDate(katiId, 'katis', history)
   const recencyScore = normalizeRecencyScore(lastDate)
   const chanceScore = getKatiRepetitionChance(katiId) / 100
-  const categoryMaxOrder = kati ? maxOrderByCategory[kati.category || 'Outros'] : 0
-  const orderScore = kati && categoryMaxOrder > 1 ? (kati.order - 1) / (categoryMaxOrder - 1) : 0.5
 
-  return calculateScore(orderScore, chanceScore, recencyScore)
+  return calculateScore(chanceScore, recencyScore)
 }
 
-const calculateScore = (orderScore, chanceScore, recencyScore) => {
+const calculateScore = (chanceScore, recencyScore) => {
   // Fórmula de recomendação:
-  return 0.3 * orderScore + 0.3 * chanceScore + 0.4 * recencyScore;
+  return chanceScore * recencyScore;
 };
 
 const sortedRecommendations = (items, type, limit = 6) => {
