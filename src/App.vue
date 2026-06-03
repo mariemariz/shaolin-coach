@@ -8,6 +8,7 @@
           Uma aplicação para organizar sua rotina de treino, técnicas e progressão diária.
         </p>
       </div>
+      <!-- <MasterBadge /> -->
     </header>
 
     <main>
@@ -29,4 +30,6 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import MasterBadge from './components/MasterBadge.vue'
+
 </script>

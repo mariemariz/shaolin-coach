@@ -119,7 +119,18 @@ const normalizeStoredTechniques = (stored) => {
 const knownTechniques = ref(normalizeStoredTechniques(loadStoredArray(STORAGE_KEYS.techniques, defaultTechniques)))
 // userKnownKatis stores an array of masterKatis ids that the user marked as learned
 const userKnownKatis = ref(loadStoredArray(STORAGE_KEYS.userKnownKatis, []))
-const trainingHistory = ref(loadStoredArray(STORAGE_KEYS.history, []))
+const normalizeHistoryEntry = (entry) => ({
+  ...entry,
+  techniques: (entry.techniques || []).map((tech) => {
+    const name = typeof tech === 'string' ? tech : tech?.name
+    return knownTechniques.value.find((t) => t.name === name) || { name }
+  }),
+  katis: Array.isArray(entry.katis) ? entry.katis : [],
+})
+
+const trainingHistory = ref(
+  loadStoredArray(STORAGE_KEYS.history, []).map(normalizeHistoryEntry),
+)
 const katiRepetitionChances = ref(loadStoredArray(STORAGE_KEYS.katiRepetitionChances, {}))
 
 const getLocalDateTimeValue = (date = new Date()) => {
@@ -130,6 +141,8 @@ const getLocalDateTimeValue = (date = new Date()) => {
 const formDatetime = ref(getLocalDateTimeValue())
 const selectedTechniques = ref([])
 const selectedKatis = ref([]) // will store kati ids
+const selectedObservations = ref('')
+const editingEntryId = ref(null)
 
 const saveArray = (key, value) => {
   if (globalThis.window === undefined) return
@@ -141,9 +154,49 @@ watch(userKnownKatis, (value) => saveArray(STORAGE_KEYS.userKnownKatis, value), 
 watch(trainingHistory, (value) => saveArray(STORAGE_KEYS.history, value), { deep: true })
 watch(katiRepetitionChances, (value) => saveArray(STORAGE_KEYS.katiRepetitionChances, value), { deep: true })
 
+const resetTrainingForm = () => {
+  formDatetime.value = getLocalDateTimeValue()
+  selectedTechniques.value = []
+  selectedKatis.value = []
+  selectedObservations.value = ''
+  editingEntryId.value = null
+}
+
+const startEditingTraining = (entryId) => {
+  const entry = trainingHistory.value.find((item) => item.id === entryId)
+  if (!entry) return
+
+  editingEntryId.value = entryId
+  formDatetime.value = entry.datetime
+  selectedTechniques.value = entry.techniques.map((tech) => {
+    return knownTechniques.value.find((t) => t.name === tech.name) || tech
+  })
+  selectedKatis.value = [...entry.katis]
+  selectedObservations.value = entry.observations || ''
+}
+
+const cancelTrainingEdit = () => {
+  resetTrainingForm()
+}
+
 const registerTraining = () => {
   if (!formDatetime.value || (!selectedTechniques.value.length && !selectedKatis.value.length)) {
     return
+  }
+
+  if (editingEntryId.value !== null) {
+    const index = trainingHistory.value.findIndex((entry) => entry.id === editingEntryId.value)
+    if (index !== -1) {
+      trainingHistory.value[index] = {
+        ...trainingHistory.value[index],
+        datetime: formDatetime.value,
+        techniques: [...selectedTechniques.value],
+        katis: [...selectedKatis.value],
+        observations: selectedObservations.value,
+      }
+      resetTrainingForm()
+      return
+    }
   }
 
   trainingHistory.value.unshift({
@@ -151,14 +204,11 @@ const registerTraining = () => {
     datetime: formDatetime.value,
     techniques: [...selectedTechniques.value],
     katis: [...selectedKatis.value], // store ids
+    observations: selectedObservations.value,
   })
 
-  selectedTechniques.value = []
-  selectedKatis.value = []
-  formDatetime.value = getLocalDateTimeValue()
+  resetTrainingForm()
 }
-
-
 
 const toggleKnownKati = (id) => {
   const idx = userKnownKatis.value.indexOf(id)
@@ -206,10 +256,11 @@ const historyMap = (type) => {
 
   trainingHistory.value.forEach((entry) => {
     (entry[type] || []).forEach((item) => {
-      const current = seen.get(item)
+      const key = type === 'techniques' ? item.name : item
+      const current = seen.get(key)
       const entryDate = new Date(entry.datetime)
       if (!current || entryDate > current) {
-        seen.set(item, entryDate)
+        seen.set(key, entryDate)
       }
     })
   })
@@ -261,14 +312,20 @@ const sortedRecommendations = (items, type, limit = 6) => {
     ['katis', historyMap('katis')],
   ])
 
-  return items
+  const sorted = items
     .slice()
     .sort((a, b) => {
       const scoreA = type === 'techniques' ? scoreTechnique(a, history) : scoreKati(a, history)
       const scoreB = type === 'techniques' ? scoreTechnique(b, history) : scoreKati(b, history)
+      if (scoreA === scoreB && type === 'katis') {
+        const katiA = masterKatis.find((k) => k.id === a);
+        const katiB = masterKatis.find((k) => k.id === b);
+        return katiB.order - katiA.order; // Prioriza katis com ordem mais alta (mais avançados)
+      }
       return scoreB - scoreA
     })
     .slice(0, limit)
+  return sorted;
 }
 
 const getRecommendedTechniques = (count = 6) => {
@@ -294,6 +351,7 @@ export function useTrainingStore() {
     formDatetime,
     selectedTechniques,
     selectedKatis,
+    selectedObservations,
     katiRepetitionChances,
     registerTraining,
     toggleKnownKati,
@@ -307,5 +365,8 @@ export function useTrainingStore() {
     recentHistory,
     lastTrainingDate,
     toLocale,
+    editingEntryId,
+    startEditingTraining,
+    cancelTrainingEdit,
   }
 }
